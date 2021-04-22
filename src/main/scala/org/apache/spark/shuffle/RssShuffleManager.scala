@@ -32,6 +32,9 @@ import org.apache.spark.shuffle.rss.{BufferManagerOptions, RssSparkListener, Rss
 
 import scala.collection.JavaConverters
 
+/**
+ * 通过继承ShuffleManager来接管Spark的shuffle过程
+ */
 class RssShuffleManager(conf: SparkConf) extends ShuffleManager with Logging {
   logInfo(s"Creating ShuffleManager instance: ${this.getClass.getSimpleName}, version: ${RssBuildInfo.Version}, revision: ${RssBuildInfo.Revision}")
 
@@ -386,6 +389,13 @@ class RssShuffleManager(conf: SparkConf) extends ShuffleManager with Logging {
     serversValue
   }
 
+  /**
+   * <pre>
+   * 1. 默认一次最少使用1个，最多使用50个 RSSServer
+   * 2. 默认每20个executor使用一个RSS Server
+   * 3. 默认shuffle的数据保存一份副本，如果有多个副本，RSS Server个数翻倍
+   * </pre>
+   */
   private def getRssServers(numPartitions: Int, excludeHosts: Seq[String]): RssServerSelectionResult = {
     val maxServerCount = conf.get(RssOpts.maxServerCount)
     val minServerCount = conf.get(RssOpts.minServerCount)

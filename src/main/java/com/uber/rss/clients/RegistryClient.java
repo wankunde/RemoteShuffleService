@@ -30,6 +30,12 @@ import java.util.List;
 
 /***
  * Client connecting to registry server.
+ *
+ * <pre>
+ * 在 Standalone 模式下由 StandaloneServiceRegistryClient 递归调用到此类
+ * RSS Server 调用`registerServer` RPC 方法进行注册
+ * Client 调用`getServers` RPC方法获取存活服务列表
+ * </pre>
  */
 public class RegistryClient extends com.uber.rss.clients.ClientBase {
   private static final Logger logger =

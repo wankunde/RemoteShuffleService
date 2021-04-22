@@ -28,6 +28,10 @@ import java.util.function.Supplier;
 
 /**
  * This class wraps a ServiceRegistry instance and add metrics for its method call.
+ *
+ * <pre>
+ * 包装类设计模式，代码看起来还是不如scala的切面实现看的数据，不过复用来supply来实现，还算简单吧
+ * </pre>
  */
 public class ServiceRegistryWrapper implements ServiceRegistry {
   private static MetadataClientMetricsContainer metricsContainer = new MetadataClientMetricsContainer();

@@ -46,6 +46,9 @@ import java.util.concurrent.atomic.AtomicLong;
  * The background threads will poll the queues to get records and send to servers. Each record will be sent
  * to a server replication group and written to all servers in that group.
  * This class is not thread safe and should be only called in same thread.
+ *
+ * writeDataBlock 实质是像 对应的recordQueue 中发送了 Record对象，等待异步消息发送；
+ * thread N 通过 recordQueue N 不断接收数据，如果发送有发送数据（Record.value）则通过 client N异步传输数据
  */
 public class MultiServerAsyncWriteClient implements MultiServerWriteClient {
     private static final Logger logger = LoggerFactory.getLogger(MultiServerAsyncWriteClient.class);

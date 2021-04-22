@@ -26,6 +26,11 @@ import java.util.List;
 
 /***
  * This is in memory service registry for testing purpose.
+ *
+ * <pre>
+ * 通过一个ConcurrentHashMap存储所有的Server，直接返回Service信息即可
+ * 无高可用和Server优先级等信息
+ * </pre>
  */
 public class InMemoryServiceRegistry implements ServiceRegistry {
     private static final String DEFAULT_SERVER_ROOT_URL = "http://localhost:58808";
